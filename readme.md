@@ -1,50 +1,115 @@
-# 🗂️ Todo Aggregator Plugin for Obsidian
+# Todo Aggregator
 
-**Aggregate all your unchecked `- [ ]` tasks from your entire Obsidian vault into a single dashboard file.**  
-Stay on top of your todos without flipping through every note!
+**A focused task aggregation plugin for Obsidian.**
 
-## 🚀 Features
+Todo Aggregator scans your entire Obsidian vault and collects all unchecked `- [ ]` tasks into a single note. 
 
-- 🧠 Scans all `.md` files in your vault (excluding folders you define).
-- ✅ Collects unchecked `- [ ]` style todos.
-- 📄 Groups them by file in a single "Todo Dashboard" note.
-- ⚡ Uses caching to avoid unnecessary re-processing.
-- 🛡️ Skips previously scanned files unless they've changed.
-- 🔕 Optionally excludes specific folders like `archive/` or `templates/`.
+Instead of hunting through dozens of files, you get one centralized view of everything that still needs to be done.
 
-## 📦 Installation
 
-1. Download or clone the repository.
-2. Copy it into your Obsidian vault’s `.obsidian/plugins` directory.
-3. Enable **Todo Aggregator** in your Obsidian community plugins settings.
 
-## 🛠️ Usage
+## Key Features
 
-You can trigger aggregation in two ways:
-- Click the ✅ **"Aggregate Todos"** ribbon icon.
-- Run the **"Aggregate Todos"** command via the Command Palette.
+- **Vault-wide scanning**  
+  Aggregates unchecked `- [ ]` tasks from all Markdown files in your vault.
 
-This will scan your notes, extract todos, and write them to your defined dashboard file (default: `Todo Dashboard.md`).
+- **Centralized view**  
+  Writes all pending tasks into a single note, grouped by source file.
 
-## ⚙️ Settings
+- **File-based grouping**  
+  Tasks are organized under their originating notes for context and traceability.
 
-Accessible via the plugin settings in Obsidian.
+- **Smart caching**  
+  Avoids reprocessing unchanged files for faster subsequent runs.
 
-- **Target file**  
-  The file where aggregated todos will be written.  
-  _Example:_ `Todos/Dashboard.md`
+- **Change-aware updates**  
+  Only rescans files that have been modified since the last aggregation.
 
-- **Exclude folders**  
-  Comma-separated list of folder names to skip.  
-  _Example:_ `templates,archive`
+- **Folder exclusions**  
+  Skip folders like `archive/`, `templates/`, or any path you choose.
 
-> 💡 The plugin automatically skips the dashboard file to avoid recursive todos.
+- **Safe by design**  
+  Automatically ignores the dashboard file itself to prevent recursive aggregation.
 
-## 📋 Output Format
 
-Each file's todos will be grouped like this in your dashboard:
+## Usage
+
+You can run Todo Aggregator in two ways:
+
+- Click the **Aggregate Todos** ribbon icon
+- Open the Command Palette and run **Aggregate Todos**
+
+Each run scans eligible files and updates the note with all unchecked tasks.
+
+
+## Output Format
+
+Tasks are grouped by file using a clean, readable structure:
 
 ```markdown
-## 📄 [[MyNote.md]]
-- [ ] Fix the intro section
-- [ ] Add diagrams
+## 📄 [[ProjectPlan.md]]
+- [ ] Finalize architecture
+- [ ] Write documentation
+
+## 📄 [[MeetingNotes.md]]
+- [ ] Follow up with design team
+```
+
+
+
+## Settings
+
+Available in the plugin settings panel.
+
+- **Dashboard file path**  
+  Location where aggregated todos are written.  
+  _Example:_ `Todos/Dashboard.md`
+
+- **Excluded folders**  
+  Comma-separated list of folder names or paths to ignore.  
+  _Example:_ `archive,templates,drafts`
+
+> The dashboard file is always excluded automatically.
+
+
+## Installation
+
+> **Note:** Todo Aggregator is not yet listed in the Obsidian Community Plugins directory.
+
+### Manual Installation
+
+1. Download the latest release from the GitHub Releases page.
+2. Extract the plugin files into:
+   ```
+   .obsidian/plugins/todo-aggregator/
+   ```
+3. Reload Obsidian and enable **Todo Aggregator** from the plugins settings.
+
+---
+
+## Development
+
+If you want to contribute or customize the plugin:
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start development mode:
+   ```bash
+   npm run dev
+   ```
+
+
+## About Siran
+
+**Todo Aggregator** is built by **Siran**.
+
+Siran develops focused tools for productivity, organization, and intentional digital workflows - ranging from open-source utilities to premium tools.
+
+Learn more at https://siran.app
+
+---
+
+**License:** MIT
