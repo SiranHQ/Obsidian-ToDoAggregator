@@ -1,19 +1,13 @@
-import { App, Plugin, TFile, Notice, PluginSettingTab, Setting } from 'obsidian';
-
-// --- Settings Interface ---
-interface TodoAggregatorSettings {
-	targetFile: string;
-	excludeFolders: string;
-}
-
-const DEFAULT_SETTINGS: TodoAggregatorSettings = {
-	targetFile: 'Todo Dashboard.md',
-	excludeFolders: ''
-};
+import { Plugin, TFile, Notice } from 'obsidian';
+import {
+	TodoAggregatorSettings,
+	DEFAULT_SETTINGS,
+	TodoAggregatorSettingsTab,
+} from './settings';
 
 // --- Main Plugin Class ---
 export default class TodoAggregatorPlugin extends Plugin {
-	settings: TodoAggregatorSettings;
+	settings!: TodoAggregatorSettings;
 
 	// In-memory cache mapping file paths to their last modification time and todos
 	private todoCache: Map<string, { mtime: number, todos: string[] }> = new Map();
@@ -215,42 +209,3 @@ export default class TodoAggregatorPlugin extends Plugin {
 	}
 }
 
-// --- Settings Tab Class ---
-class TodoAggregatorSettingsTab extends PluginSettingTab {
-	plugin: TodoAggregatorPlugin;
-
-	constructor(app: App, plugin: TodoAggregatorPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
-
-	display(): void {
-		const { containerEl } = this;
-
-		containerEl.empty();
-
-		// Target file setting
-		new Setting(containerEl)
-			.setName('Target file')
-			.setDesc('Path to the aggregated todo file (e.g., "Todos/Dashboard.md")')
-			.addText(text => text
-				.setPlaceholder('Todo Dashboard.md')
-				.setValue(this.plugin.settings.targetFile)
-				.onChange(async (value) => {
-					this.plugin.settings.targetFile = value;
-					await this.plugin.saveSettings();
-				}));
-
-		// Excluded folders setting
-		new Setting(containerEl)
-			.setName('Exclude folders')
-			.setDesc('Comma-separated list of folders to exclude (e.g., "templates,archive")')
-			.addText(text => text
-				.setPlaceholder('templates,archive')
-				.setValue(this.plugin.settings.excludeFolders)
-				.onChange(async (value) => {
-					this.plugin.settings.excludeFolders = value;
-					await this.plugin.saveSettings();
-				}));
-	}
-}
